@@ -1,4 +1,4 @@
-SOURCE = src/couchbase_impl.cc src/couchbase_impl.h src/args.cc src/notify.cc     \
+SOURCE = src/couchbase_impl.cc src/couchbase_impl.h src/notify.cc     \
          src/namemap.cc src/operations.cc src/namemap.h src/cas.cc      \
          src/cas.h
 
@@ -33,5 +33,6 @@ reformat:
                --add-brackets \
                --unpad-paren \
                --align-pointer=name \
+               io/*.c io/*.h io/util/hexdump.c \
                src/*.cc \
                src/*.h

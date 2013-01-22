@@ -28,22 +28,26 @@ setup(function(err, cb) {
                  }
              };
              cb.deleteDesignDoc('dev_test-design', function() {
-                 cb.createDesignDoc('dev_test-design', ddoc,
-                                    function(err, resp, data) {
+                 cb.setDesignDoc('dev_test-design', ddoc,
+                                 function(err, code, data) {
                      assert(!err, "error creating design document");
-
                      // now lets find our key in the view.
                      // We need to add stale=false in order to force the
                      // view to be generated (since we're trying to look
                      // for our key and it may not be in the view yet due
                      // to race conditions..
                      var params =  {key : testkey, stale : "false"};
-                     cb.view("dev_test-design", "test-view", params, function(err, view) {
-                        assert(!err, "error fetching view");
-                        assert(view.length > 0)
-                        assert.equal(testkey, view[0].key)
-                        cb.deleteDesignDoc('dev_test-design', function() {
-                            setup.end()
+                     cb.view("dev_test-design", "test-view", params,
+			     function(err, code, view) {
+				 assert(!err, "error fetching view");
+				 assert(code == 200, "error fetching view");
+				 json = JSON.parse(view);
+				 rows = json.rows;
+				 assert(rows.length == 1);
+				 assert.equal(testkey, rows[0].key);
+
+				 cb.deleteDesignDoc('dev_test-design', function() {
+				     setup.end()
                         });
                     });
                  });
