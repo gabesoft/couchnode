@@ -37,7 +37,7 @@
       ['OS!="win"', {
         'link_settings': {
           'libraries': [
-            '$(EXTRA_LDFLAGS)',
+            '-L/usr/local/lib -Wl,-rpath,/usr/local/lib',
             '-lcouchbase',
           ],
         },
@@ -49,7 +49,7 @@
           '-Wno-unused-variable',
           '-Wno-unused-function',
           '$(EXTRA_CFLAGS)',
-          '$(EXTRA_CPPFLAGS)',
+          '-I/usr/local/include',
           '$(EXTRA_CXXFLAGS)',
         ],
         'cflags_c':[
